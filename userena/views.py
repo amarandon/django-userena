@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.conf import settings
 from django.contrib import messages
 from django.utils.translation import ugettext as _
+from django.utils.translation import get_language
 from django.views.generic import list_detail
 from django.http import HttpResponseForbidden, Http404
 
@@ -127,6 +128,10 @@ def activate(request, username, activation_key,
     """
     user = UserenaSignup.objects.activate_user(username, activation_key)
     if user:
+        # Set profile language to current language
+        profile = user.get_profile()
+        profile.language = get_language()
+        profile.save()
         # Sign the user in.
         auth_user = authenticate(identification=user.email,
                                  check_password=False)
