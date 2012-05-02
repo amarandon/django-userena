@@ -522,6 +522,8 @@ def profile_edit(request, username, edit_profile_form=EditProfileForm,
                 messages.success(request, _('Your profile has been updated.'),
                                  fail_silently=True)
 
+            userena_signals.profile_edit.send(sender=user.__class__, user=user, request=request)
+
             if success_url: redirect_to = success_url
             else: redirect_to = reverse('userena_profile_detail', kwargs={'username': username})
             return redirect(redirect_to)
