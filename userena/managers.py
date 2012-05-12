@@ -136,6 +136,12 @@ class UserenaManager(UserManager):
                 return user
         return False
 
+    def activated(self, username):
+        return self.filter(
+                user__username=username,
+                activation_key=userena_settings.USERENA_ACTIVATED
+                ).exists()
+
     def confirm_email(self, username, confirmation_key):
         """
         Confirm an email address by checking a ``confirmation_key``.

@@ -147,6 +147,7 @@ def activate(request, username, activation_key,
         return redirect(redirect_to)
     else:
         if not extra_context: extra_context = dict()
+        extra_context['activated'] = UserenaSignup.objects.activated(username)
         return direct_to_template(request,
                                   template_name,
                                   extra_context=extra_context)
