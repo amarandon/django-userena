@@ -128,10 +128,10 @@ def identification_field_factory(label, error_required):
         String containing the error message if the field is left empty.
 
     """
-    return forms.CharField(label=_("%(label)s") % {'label': label},
+    return forms.CharField(label=label,
                            widget=forms.TextInput(attrs=attrs_dict),
                            max_length=75,
-                           error_messages={'required': _("%(error)s") % {'error': error_required}})
+                           error_messages={'required': error_required})
 
 class AuthenticationForm(forms.Form):
     """
@@ -149,6 +149,8 @@ class AuthenticationForm(forms.Form):
     def __init__(self, *args, **kwargs):
         """ A custom init because we need to change the label if no usernames is used """
         super(AuthenticationForm, self).__init__(*args, **kwargs)
+        self.fields['remember_me'].label = _(u'Remember me for %(days)s') % {'days':
+                        _(userena_settings.USERENA_REMEMBER_ME_DAYS[0])}
         if userena_settings.USERENA_WITHOUT_USERNAMES:
             self.fields['identification'] = identification_field_factory(_(u"Email"),
                                                                          _(u"Please supply your email."))
