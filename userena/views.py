@@ -142,7 +142,7 @@ def activate(request, username, activation_key,
                              fail_silently=True)
 
         if success_url: redirect_to = success_url % {'username': user.username }
-        else: redirect_to = reverse('userena_profile_detail',
+        else: redirect_to = reverse('userena_profile_edit',
                                     kwargs={'username': user.username})
         return redirect(redirect_to)
     else:
