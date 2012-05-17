@@ -14,6 +14,11 @@ attrs_dict = {'class': 'required'}
 
 USERNAME_RE = r'^[\.\w]+$'
 
+
+class EmailInput(forms.TextInput):
+    input_type = 'email'
+
+
 class SignupForm(forms.Form):
     """
     Form for creating a new user account.
@@ -28,7 +33,7 @@ class SignupForm(forms.Form):
                                 widget=forms.TextInput(attrs=attrs_dict),
                                 label=_("Username"),
                                 error_messages={'invalid': _('Username must contain only letters, numbers, dots and underscores.')})
-    email = forms.EmailField(widget=forms.TextInput(attrs=dict(attrs_dict,
+    email = forms.EmailField(widget=EmailInput(attrs=dict(attrs_dict,
                                                                maxlength=75)),
                              label=_("Email"))
     password1 = forms.CharField(widget=forms.PasswordInput(attrs=attrs_dict,
@@ -172,8 +177,8 @@ class AuthenticationForm(forms.Form):
         return self.cleaned_data
 
 class ChangeEmailForm(forms.Form):
-    email = forms.EmailField(widget=forms.TextInput(attrs=dict(attrs_dict,
-                                                               maxlength=75)),
+    email = forms.EmailField(widget=EmailInput(attrs=dict(attrs_dict,
+                                                          maxlength=75)),
                              label=_(u"New email"))
 
     def __init__(self, user, *args, **kwargs):
