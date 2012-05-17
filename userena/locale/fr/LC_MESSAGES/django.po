@@ -97,7 +97,7 @@ msgstr ""
 
 #: forms.py:177 templates/userena/email_confirm_complete.html:6
 msgid "New email"
-msgstr "Nouvel adresse électronique"
+msgstr "Nouvelle adresse électronique"
 
 #: forms.py:195
 msgid "You're already known under this email."
